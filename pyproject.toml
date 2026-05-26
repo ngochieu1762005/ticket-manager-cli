@@ -1,0 +1,9 @@
+[project]
+name = "simple-ticket-cli"
+version = "0.1.0"
+description = "Simple Ticket Manager CLI using TDD"
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
