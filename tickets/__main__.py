@@ -1,6 +1,8 @@
 import argparse
+
 from .storage import JsonStorage
 from .service import TicketService
+from .kb_command import add_kb_parser, handle_kb_command
 
 
 def main():
@@ -27,12 +29,18 @@ def main():
     update_cmd.add_argument("id", type=int)
     update_cmd.add_argument("--status", required=True, choices=["open", "doing", "done"])
 
+    add_kb_parser(commands)
+
     args = parser.parse_args()
 
-    storage = JsonStorage(args.file)
-    service = TicketService(storage)
-
     try:
+        if args.command == "kb":
+            handle_kb_command(args)
+            return
+
+        storage = JsonStorage(args.file)
+        service = TicketService(storage)
+
         if args.command == "create":
             tags = []
             if args.tags:
